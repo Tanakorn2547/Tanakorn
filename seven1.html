@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เมนู น้ำโค้ก</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.min.js" defer></script>
+</head>
+
+<body class="bg-yellow-100 flex flex-col items-center p-6 min-h-screen">
+
+    <h1 class="text-4xl font-bold text-blue-600 mb-6">🥤 น้ำโค้ก 🥤</h1>
+
+    <!-- เพิ่มปุ่มลิงค์กลับไปหน้าแรกให้ไปอยู่มุมขวาบน -->
+    <div class="relative w-full mb-6">
+        <a href="seven.html">
+            <button class="absolute top-0 right-0 px-6 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-300 m-4">
+                กลับไปหน้าก่อนหน้า
+            </button>
+        </a>
+    </div>
+
+    <div class="flex flex-col items-center space-y-6">
+        <!-- ซูชิแซลมอน นิกิริ -->
+        <div class="text-white max-w-xs bg-white p-6 rounded-lg shadow-lg mb-6">
+            <h2 class="text-1xl font-bold text-blue-600 mb-4">เมนู น้ำโค้ก</h2>
+            <div class="mb-6">
+                <img src="โค้ก.png" alt="ซูชิแซลมอน นิกิริ" width="300" height="200">
+            </div>
+            <p class="text-gray-700">เป็นน้ำโค้กขวดแก้ว ปริมาณ 375มล.</p>
+            <p class="text-xl font-bold text-blue-600 mt-4">ราคา: 15 บาท</p>
+            <div class="mt-4">
+                <button id="add-to-cart" class="px-6 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 transition duration-300">
+                    สั่งซื้อ
+                </button>
+            </div>
+            <p id="cart-message" class="text-green-600 mt-4 hidden">สินค้าได้ถูกเพิ่มลงในตะกร้าแล้ว!</p> <!-- ข้อความแจ้งเตือน -->
+        </div>
+    </div>
+
+    <script>
+        // เพิ่มสินค้าไปยังตะกร้า
+        document.getElementById("add-to-cart").addEventListener("click", function () {
+            const item = {
+                name: "น้ำโค้ก",
+                price: 15,
+                image: "โค้ก.png"
+            };
+
+            // เพิ่มสินค้าไปยัง LocalStorage
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            cart.push(item);
+            localStorage.setItem("cart", JSON.stringify(cart));
+
+            // แสดงข้อความแจ้งเตือน
+            const message = document.getElementById("cart-message");
+            message.classList.remove("hidden");  // แสดงข้อความแจ้งเตือน
+
+            // ตั้งค่าให้ข้อความหายไปหลังจาก 3 วินาที
+            setTimeout(function () {
+                message.classList.add("hidden");
+            }, 3000);
+        });
+    </script>
+    <div class="fixed bottom-6 right-6">
+        <a href="ตะกร้า.html">
+            <button class="px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+                🛒 ตะกร้าสินค้า
+            </button>
+        </a>
+    </div>
+
+</body>
+
+</html>

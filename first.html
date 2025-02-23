@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KYเควายSushi.web</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.min.js" defer></script>
+</head>
+
+<body class="bg-yellow-100 flex flex-col items-center p-6 min-h-screen" x-data="{ selectedCategory: null }">
+    <h1 class="text-4xl font-bold text-blue-600 mb-6">🍣 KYเควาย  Sushi 🍣</h1>
+
+    <div class="w-full max-w-lg bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-blue-600 mb-4">หมวดหมู่ซูชิ</h2>
+        
+        <div class="grid grid-cols-3 gap-4 mb-6">
+            <template x-for="category in ['แซลมอน', 'เนื้อ', 'กุ้ง', 'ไข่หวาน', 'ไข่ปลา', 'น้ำดื่ม']" :key="category">
+                <div class="text-white">
+                    <!-- ตรวจสอบว่าเป็นแซลมอนหรือไม่ -->
+                    <template x-if="category === 'แซลมอน'">
+                        <a href="second.html">
+                            <button class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                        </a>
+                    </template>
+
+                    <!-- ตรวจสอบว่าเป็นเนื้อหรือไม่ -->
+                    <template x-if="category === 'เนื้อ'">
+                        <a href="third.html">
+                            <button class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                        </a>
+                    </template>
+
+                    <!-- ตรวจสอบว่าเป็นกุ้งหรือไม่ -->
+                    <template x-if="category === 'กุ้ง'">
+                        <a href="four.html">
+                            <button class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                        </a>
+                    </template>
+
+                    <!-- ตรวจสอบว่าเป็นไข่หวานหรือไม่ -->
+                    <template x-if="category === 'ไข่หวาน'">
+                        <a href="five.html">
+                            <button class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                        </a>
+                    </template>
+
+                    <!-- ตรวจสอบว่าเป็นไข่ปลา หรือหมวดหมู่อื่นๆ -->
+                    <template x-if="category === 'ไข่ปลา'">
+                        <a href="six.html">
+                            <button class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                        </a>
+                    </template>
+
+                    <template x-if="category === 'น้ำดื่ม'">
+                        <a href="seven.html">
+                            <button class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                        </a>
+                    </template>
+
+                    <!-- สำหรับหมวดหมู่อื่นๆ -->
+                    <template x-if="category !== 'แซลมอน' && category !== 'เนื้อ' && category !== 'กุ้ง' && category !== 'ไข่หวาน' && category !== 'ไข่ปลา' && category !== 'น้ำดื่ม'">
+                        <button @click="selectedCategory = category" class="w-full p-4 bg-blue-500 text-white border-4 border-blue-500 rounded hover:bg-blue-500 transition duration-700" x-text="category"></button>
+                    </template>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <!-- ปุ่มตะกร้าสินค้า -->
+    <div class="fixed bottom-6 right-6">
+        <a href="ตะกร้า.html">
+            <button class="px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+                🛒 ตะกร้าสินค้า
+            </button>
+        </a>
+    </div>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สแกน QR Code เพื่อชำระเงิน</title>
+    <script src="https://unpkg.com/html5-qrcode/minified/html5-qrcode.min.js"></script> <!-- โหลดไลบรารี -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        #qr-code-scanner {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin-bottom: 20px;
+        }
+
+        #message {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+        }
+
+        #scan-result {
+            font-size: 20px;
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+        }
+
+        #qr-image {
+            margin-top: 20px;
+            width: 400px; /* ขนาดของรูป QR */
+        }
+
+        /* ปรับตำแหน่งปุ่ม 'กลับไปหน้าแรก' ให้อยู่มุมขวาบน */
+        .back-to-home {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            background-color: #0056b3;
+        }
+
+        /* ปรับตำแหน่งปุ่ม 'ตะกร้าสินค้า' ให้อยู่มุมขวาล่าง */
+        .cart-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background-color: #28a745;
+            color: white;
+            font-weight: bold;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cart-button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>📱 สแกน QR Code เพื่อชำระเงิน</h1>
+
+    <!-- แสดงรูปภาพ QR Code -->
+    <img id="qr-image" src="QR.jpg" alt="QR Code" />
+
+    <!-- ที่ที่จะแสดงกล้องสแกน QR Code -->
+    <div id="qr-code-scanner"></div>
+
+    <div id="message">กรุณาสแกน QR Code สำหรับการชำระเงิน</div>
+    <div id="scan-result"></div> <!-- จะแสดงผลลัพธ์ของการสแกน -->
+
+    <script>
+        // ฟังก์ชันที่จะทำงานเมื่อสแกน QR Code
+        function onScanSuccess(decodedText, decodedResult) {
+            // เมื่อ QR Code ถูกสแกนสำเร็จ จะได้รับ URL หรือข้อมูลอื่นๆ
+            document.getElementById('scan-result').innerText = `QR Code สแกนสำเร็จ! ข้อมูล: ${decodedText}`;
+            
+            // คุณสามารถใช้ข้อมูลนี้ในการทำธุรกรรมหรือการชำระเงิน เช่น ส่งไปยัง URL สำหรับการชำระเงิน
+            if (decodedText.includes("https://paymentgateway.com/pay")) {
+                // เพิ่มโค้ดที่เกี่ยวข้องกับการชำระเงินที่นี่
+                alert("ทำการชำระเงินผ่าน QR Code แล้ว");
+            }
+        }
+
+        // ฟังก์ชันที่ทำงานเมื่อเกิดข้อผิดพลาดในการสแกน
+        function onScanError(errorMessage) {
+            console.error(`ข้อผิดพลาดในการสแกน: ${errorMessage}`);
+        }
+
+        // เริ่มต้นกล้องเพื่อสแกน QR Code
+        function startScanning() {
+            const html5QrCode = new Html5Qrcode("qr-code-scanner");
+
+            // เริ่มการสแกน QR Code
+            html5QrCode.start(
+                { facingMode: "environment" }, // ใช้กล้องหลัง
+                {
+                    fps: 10,  // จำนวนการสแกนต่อวินาที
+                    qrbox: 250, // ขนาดกล่องสแกน QR
+                },
+                onScanSuccess,
+                onScanError
+            ).catch((err) => {
+                console.error(`ไม่สามารถเริ่มการสแกนได้: ${err}`);
+            });
+        }
+
+        // เริ่มการสแกนทันทีที่โหลดหน้า
+        startScanning();
+
+        // ฟังก์ชันสำหรับลบข้อมูลจาก LocalStorage เมื่อกลับไปหน้าแรก
+        function clearCart() {
+            localStorage.removeItem("cart");
+            localStorage.removeItem("cartStatus");
+        }
+    </script>
+
+    <!-- ปุ่มกลับไปหน้าแรก -->
+    <a href="first.html" onclick="clearCart()">
+        <button class="back-to-home">
+            กลับไปหน้าแรก
+        </button>
+    </a>
+
+    <!-- ปุ่มตะกร้าสินค้า -->
+    <a href="ตะกร้า.html">
+        <button class="cart-button px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-green-700 transition duration-300">
+            🛒 ตะกร้าสินค้า
+        </button>
+    </a>
+
+</body>
+
+</html>
